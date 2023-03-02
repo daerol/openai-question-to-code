@@ -1,15 +1,13 @@
 '''
-This is created for pure educational purposes, the script uses openAI's code-davinci-002 model generate code from a prompt.
-The problem was that coding challenge/test would usually disable copying of questions, so this script will allow you have the ability to convert the screenshots of the questions into code. 
-The prompt is a problem statement, and the code generated is a solution to the problem statement.
+This is created for pure educational purposes, the script uses openAI's code-davinci-002 model generate code from a prompt. You can use text-davinci-002 to generate code too, but the code generated is not as good as code-davinci-002.
 
 You are required to have an openAI account and API key to run this script.
 And .env file with the following variables:
-- OPENAI_APIKEY
-- DIRECTORY
-- PATH_TO_TESSERACT
+- OPENAI_APIKEY (required)
+- DIRECTORY (optional)
+- PATH_TO_TESSERACT (optional)
 - DEFAULT_MESSAGE_PROMPT (optional)
-- DEFAULT_ENGINE (optional)
+- DEFAULT_ENGINE (optional) 
 - DEFAULT_LANGUAGE (optional)
 
 The script will iterate through all image in the directory given and concatenating all the image text to generate code.
@@ -34,7 +32,7 @@ DIRECTORY = os.getenv("DIRECTORY") or str(Path.cwd())
 PATH_TO_TESSERACT = os.getenv("TESSERACT_PATH")
 OPENAI_APIKEY = os.getenv("OPENAI_APIKEY")
 DEFAULT_LANGUAGE = os.getenv("DEFAULT_LANGUAGE") or "python"
-DEFAULT_ENGINE = os.getenv("DEFAULT_ENGINE") or "text-davinci-002"
+DEFAULT_ENGINE = os.getenv("DEFAULT_ENGINE") or "code-davinci-002"
 DEFAULT_MESSAGE_PROMPT = os.getenv("DEFAULT_MESSAGE_PROMPT") or f"\"\"\"\n1. Write in {DEFAULT_LANGUAGE}: "
 TESSERACT_CONFIG = os.getenv("TESSERACT_CONFIG") or "--psm 6"
 
@@ -46,7 +44,7 @@ def call_openai(engine, prompt):
         engine=engine,
         prompt=prompt,
         temperature=0.9,
-        max_tokens=500,
+        max_tokens=1000,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
@@ -104,6 +102,7 @@ def check_file_exist(file):
         os.remove(file)
     
 if __name__ == "__main__":
+    print("Starting script...")
     # check if existing files
     check_file_exist(DIRECTORY + f"/{check_programming_language(default_lang=DEFAULT_LANGUAGE)}")
     # process images
@@ -112,4 +111,4 @@ if __name__ == "__main__":
     problem_processing()
     # remove problem.txt
     check_file_exist(DIRECTORY + "/problem.txt")
-
+    print("Script completed!")
