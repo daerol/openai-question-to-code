@@ -1,6 +1,6 @@
 # OpenAI Question to Code
 
-I've created a tool that can generate code solutions for educational purposes. It's powered by OpenAI's text-davinci-002 model, which means you can input a coding challenge and the tool will generate a code solution for you. Please keep in mind that the generated code solutions are meant to serve as a reference only, and may not be 100% accurate. Use the tool with caution and at your own risk.
+I've created a tool that can generate code solutions for educational purposes. It's powered by OpenAI's code-davinci-002 model, which means you can input a coding challenge and the tool will generate a code solution for you. Please keep in mind that the generated code solutions are meant to serve as a reference only, and may not be 100% accurate. Use the tool with caution and at your own risk.
 
 
 ## Installation

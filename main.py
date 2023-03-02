@@ -63,7 +63,7 @@ def combine_images():
     for i in range(len(os.listdir(DIRECTORY + "/images"))):
         filename = f"{i}.png"
         f = os.path.join(DIRECTORY + "/images", filename)
-        print(f)
+        print("2/4: ----PROCESSING: " + f"{i+1}/{len(os.listdir(DIRECTORY + '/images'))} images")
         if os.path.exists(f):
             img = PIL.Image.open(f)
             pytesseract.tesseract_cmd = PATH_TO_TESSERACT
@@ -79,7 +79,7 @@ def problem_processing():
     code_problem = DEFAULT_MESSAGE_PROMPT + open("problem.txt", "r").read() + "s\n\"\"\""
     code_solution = call_openai(DEFAULT_ENGINE, code_problem)
 
-    print(code_solution)
+    # print(code_solution)
 
     file_name = check_programming_language(default_lang=DEFAULT_LANGUAGE)
 
@@ -93,6 +93,7 @@ def check_programming_language(default_lang):
         "java": "solution.java",
         "c++": "solution.cpp",
         "c": "solution.c",
+        "sql": "solution.sql",
         "_": "solution.txt"
     }
     return file_name.get(default_lang, file_name["_"])
@@ -102,13 +103,20 @@ def check_file_exist(file):
         os.remove(file)
     
 if __name__ == "__main__":
-    print("Starting script...")
+    print("1/4: ----STARTED: Checking if solution file exist")
     # check if existing files
     check_file_exist(DIRECTORY + f"/{check_programming_language(default_lang=DEFAULT_LANGUAGE)}")
+    print("1/4: ----COMPLETED: Checking if solution file exist")
     # process images
+    print("2/4: ----STARTED: Processing images")
     combine_images()
+    print("2/4: ----COMPLETED: Processing images")
     # process problem
+    print("3/4: ----STARTED: Processing problem")
     problem_processing()
+    print("3/4: ----COMPLETED: Processing problem")
     # remove problem.txt
+    print("4/4: ----STARTED: Removing problem.txt")
     check_file_exist(DIRECTORY + "/problem.txt")
-    print("Script completed!")
+    print("4/4: ----COMPLETED: Removing problem.txt")
+    
